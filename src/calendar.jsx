@@ -105,6 +105,7 @@ export default class Calendar extends React.Component {
     useShortMonthInDropdown: PropTypes.bool,
     showDisabledMonthNavigation: PropTypes.bool,
     renderChildrenForDate: PropTypes.func,
+    onWeekNameSelect: PropTypes.func,
   };
 
   static get defaultProps() {
@@ -271,6 +272,9 @@ export default class Calendar extends React.Component {
         </div>
       );
     }
+
+    const firstDayOfMonth = this.props.openToDate;
+
     return dayNames.concat(
       [0, 1, 2, 3, 4, 5, 6].map(offset => {
         const day = addDays(cloneDate(startOfWeek), offset);
@@ -278,8 +282,18 @@ export default class Calendar extends React.Component {
         const weekDayName = this.props.useWeekdaysShort
           ? getWeekdayShortInLocale(localeData, day)
           : getWeekdayMinInLocale(localeData, day);
+
+        const weekdayDelta = day.isoWeekday() - firstDayOfMonth.isoWeekday();
+
         return (
-          <div key={offset} className="react-datepicker__day-name">
+          <div key={offset} className="react-datepicker__day-name" onClick={
+            e => this.props.onWeekNameSelect(
+              firstDayOfMonth.clone().add(
+                weekdayDelta < 0 ? weekdayDelta + 7 : weekdayDelta, 'days'
+              ),
+              e
+            )
+          }>
             {weekDayName}
           </div>
         );

@@ -130,6 +130,7 @@ export default class DatePicker extends React.Component {
     excludeTimes: PropTypes.array,
     useShortMonthInDropdown: PropTypes.bool,
     renderChildrenForDate: PropTypes.func,
+    onWeekNameSelect: PropTypes.func
   };
 
   static get defaultProps() {
@@ -155,6 +156,7 @@ export default class DatePicker extends React.Component {
       showTimeSelect: false,
       timeIntervals: 30,
       timeCaption: "Time",
+      onWeekNameSelect() {},
     };
   }
 
@@ -539,7 +541,9 @@ export default class DatePicker extends React.Component {
         timeCaption={this.props.timeCaption}
         className={this.props.calendarClassName}
         yearDropdownItemNumber={this.props.yearDropdownItemNumber}
-        renderChildrenForDate={this.props.renderChildrenForDate}>
+        renderChildrenForDate={this.props.renderChildrenForDate}
+        onWeekNameSelect={this.props.onWeekNameSelect}
+      >
         {this.props.children}
       </WrappedCalendar>
     );
