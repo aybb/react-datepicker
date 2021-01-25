@@ -189,11 +189,11 @@ export default class Day extends React.Component {
         onClick={this.handleClick}
         onMouseEnter={this.handleMouseEnter}
         aria-label={`day-${getDate(this.props.day)}`}
-        role="option">
-        {getDate(this.props.day)}
-        {
-          typeof this.props.renderChildrenForDate === "function" &&
-          this.props.renderChildrenForDate(this.props.day)
+        role="option"
+      >
+        {typeof this.props.renderChildrenForDate === "function"
+          ? this.props.renderChildrenForDate(getDate(this.props.day), this.props.day)
+          : getDate(this.props.day)
         }
       </div>
     );
